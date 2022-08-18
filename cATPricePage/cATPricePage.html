@@ -1,0 +1,87 @@
+<template>
+   <lightning-card  variant="Narrow"  title="CAT Price Pages" icon-name="standard:opportunity">
+      <div class="slds-m-around_large">
+         <template if:false={isPreview}>
+            <div class="slds-grid slds-gutters"> 
+               <div class="slds-col">
+                  <lightning-input type="text" variant="standard" name="name" label="Model Name" placeholder="type here..." onchange={handleModelChange}></lightning-input>
+               </div>
+               <div class="slds-col"> 
+                  <span></span>
+               </div>
+               <div class="slds-col">   
+                  <span></span>  
+               </div>
+               <div class="slds-col">
+                  <span></span> 
+               </div> 
+               <div class="slds-col"> 
+                  <span>
+                     <lightning-button variant="brand" label="Preview" title="Preview" onclick={PreviewHandler}></lightning-button>
+                  </span>
+               </div>
+            </div>   
+            <br/> <br/> 
+
+            <lightning-input-rich-text 
+               value={addedproducts}  
+               onchange={handleRichTextChange}
+               disabled-categories="FORMAT_FONT,FORMAT_TEXT,FORMAT_BODY,ALIGN_TEXT,INSERT_CONTENT,REMOVE_FORMATTING"
+               variant="bottom-toolbar">
+            </lightning-input-rich-text> 
+
+         </template>
+         <template if:true={isPreview}>
+            <div class="slds-box slds-theme_default">
+               <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                  <thead>
+                     <tr> 
+                        <th class="" scope="col">
+                           <div class="slds-truncate" title="Product Code">Product Code</div>
+                        </th> 
+                        <th class="" scope="col">
+                           <div class="slds-truncate" title="Product Name">Product Name</div>
+                        </th>
+                        <th class="" scope="col">
+                           <div class="slds-truncate" title="Product Cost">Product Cost</div>
+                        </th>
+                     </tr>    
+                  </thead>
+                  <tbody>
+
+                     <template if:true={productsArrayList} for:each={productsArrayList} for:item="products" >
+                        <tr key = {products.Id}>
+                           <td>{products.productCode}</td>
+                           <td>{products.productName}</td>
+                           <td>{products.productPrice}</td> 
+                     
+                        </tr>  
+                     </template>
+
+                  <th class="" scope="col"> 
+                     <div class="slds-truncate" ></div>
+                  </th>
+                  <th style="font-size: 15px;font-weight: bold" scope="col"> 
+                     <div class="slds-truncate" title="Total">Total</div>
+                  </th>
+                  <th style="font-size: 15px;font-weight: bold" scope="col">
+                     <div class="slds-truncate" title="Total Product Cost">${totalPrice}</div>
+                  </th>
+                  </tbody>  
+               </table>
+            </div>
+            <br/><br/><br/>    
+            <div class="slds-align_absolute-center">
+               <lightning-layout>
+                  <lightning-layout-item padding="around-small">
+                     <lightning-button variant="destructive" label="Back" title="Back" onclick={Back}></lightning-button> 
+                  </lightning-layout-item>
+                  <lightning-layout-item padding="around-small">
+                     <lightning-button variant="brand" label="Save" title="Save" onclick={submitProducts} disabled={disableSaveButton}></lightning-button>
+                  </lightning-layout-item>
+               </lightning-layout>
+            </div>
+         </template>
+      </div>
+   </lightning-card>
+</template>
